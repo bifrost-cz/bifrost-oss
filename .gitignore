@@ -1,0 +1,38 @@
+# Licence Bifrostu
+*.bif
+*license*.bif
+
+# Proměnné prostředí a tajemství
+.env
+.env.*
+!.env.example
+*.env
+!*.env.example
+ent.env
+
+# Klíče a certifikáty
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.jks
+id_rsa*
+id_ed25519*
+
+# Exporty a zálohy databází
+*.sql
+*.dump
+*.bak
+
+# Lokální konfigurace s hodnotami (šablony mají příponu .example)
+config.local.json
+values.local.yaml
+
+# Pracovní soubory
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+tmp/
