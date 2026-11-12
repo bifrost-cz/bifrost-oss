@@ -1,4 +1,7 @@
-# Bifrost česky
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.png">
+  <img alt="Bifrost česky: znalosti, návody a osvědčené postupy pro open source AI bránu" src="assets/banner-light.png" width="100%">
+</picture>
 
 <p>
   <a href="https://github.com/maximhq/bifrost"><img alt="Bifrost na GitHubu" src="https://img.shields.io/github/stars/maximhq/bifrost?label=Bifrost&logo=github"></a>
