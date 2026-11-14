@@ -319,7 +319,7 @@ Bifrost běží. Pokračujte těmito návody:
 
 - **[Konfigurace poskytovatelů](./provider-configuration.md)**: více poskytovatelů, automatické přepínání při výpadku a vyvažování zátěže.
 - **[Integrace](https://docs.getbifrost.ai/integrations/what-is-an-integration)**: přímé náhrady za SDK OpenAI, Anthropic a GenAI.
-- **[Multimodal Support](https://docs.getbifrost.ai/quickstart/gateway/multimodal)**: podpora textu, obrázků, zvuku a streamování za společným rozhraním.
+- **[Multimodal Support](./multimodal.md)**: podpora textu, obrázků, zvuku a streamování za společným rozhraním.
 
 ### Pokročilá témata
 
