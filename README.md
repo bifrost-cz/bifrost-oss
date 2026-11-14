@@ -12,9 +12,18 @@
 
 **Bifrost česky** je komunitní místo pro sdílení znalostí, návodů a osvědčených postupů k [Bifrostu](https://github.com/maximhq/bifrost), open source AI bráně od Maxim AI. Bifrost funguje jako LLM, MCP i agent gateway: jedno OpenAI-kompatibilní API pro lokální i cloudové modely s failoverem, vyvažováním zátěže, sémantickou cache, virtuálními klíči a rozpočty.
 
-Začínáme českým překladem oficiální dokumentace. Překládáme věrně a průběžně aktualizujeme podle nových vydání. U každé stránky je uvedená verze dokumentace výrobce, ze které vychází.
+Najdete tu dvě věci:
+
+- **Překlad dokumentace:** věrný český překlad úvodu a rychlého startu oficiální dokumentace.
+- **Rychlé návody:** hlavní funkce v kostce. Vybírají to podstatné pro rozjezd a pro podrobnosti odkazují na dokumentaci výrobce.
+
+Obojí průběžně aktualizujeme podle nových vydání. U každé stránky je uvedená verze dokumentace výrobce, ze které vychází.
+
+📊 **[Bifrost OSS a Enterprise: co je v které edici](oss-a-enterprise.md)**
 
 ## Obsah
+
+### Překlad dokumentace
 
 | Oblast | Stránka | Stav |
 |---|---|---|
@@ -28,9 +37,22 @@ Začínáme českým překladem oficiální dokumentace. Překládáme věrně a
 | Rychlý start | [Multimodální AI](docs/quickstart/gateway/multimodal.md) | ✅ |
 | Rychlý start | [Reranking](docs/quickstart/gateway/reranking.md) | ✅ |
 | Rychlý start | [Decisions](docs/quickstart/gateway/decisions.md) | ✅ |
-| Funkce | virtuální klíče, rozpočty, směrování, sémantická cache | 🚧 připravujeme |
-| MCP | MCP gateway, Code Mode, Agent Mode | 🚧 připravujeme |
-| Nasazení | Docker, Kubernetes a Helm | 🚧 připravujeme |
+
+### Rychlé návody
+
+| Oblast | Návod | Stav |
+|---|---|---|
+| Governance | [Virtuální klíče](navody/virtualni-klice.md) | ✅ |
+| Governance | [Rozpočty a limity](navody/rozpocty-a-limity.md) | ✅ |
+| Spolehlivost | [Fallbacky a vyvažování zátěže](navody/fallbacky-a-vyvazovani.md) | ✅ |
+| Výkon a náklady | [Sémantická cache](navody/semanticka-cache.md) | ✅ |
+| Provoz | [Observabilita: logy, metriky, OpenTelemetry](navody/observabilita.md) | ✅ |
+| MCP | [MCP gateway](navody/mcp-gateway.md) | ✅ |
+| Nasazení | [Docker a Helm](navody/nasazeni-docker-a-helm.md) | ✅ |
+| Vývojáři | [CLI agenti: Claude Code a Codex CLI](navody/cli-agenti.md) | ✅ |
+| Rozšíření | [Pluginy v kostce](navody/pluginy.md) | ✅ |
+| Rozšíření | [Vlastní plugin v Go](navody/vlastni-plugin-go.md) | ✅ |
+| Rozšíření | [Dynamická image pro vlastní pluginy](navody/dynamicka-image.md) | ✅ |
 
 Chybí vám téma? Napište nám do [Diskuzí](https://github.com/bifrost-cz/bifrost-oss/discussions).
 
@@ -45,7 +67,7 @@ Chybí vám téma? Napište nám do [Diskuzí](https://github.com/bifrost-cz/bif
 
 Bifrost Enterprise přidává jednotné přihlášení (SSO) a role, audit, guardrails, provoz v clusteru, napojení na trezory tajemství a Bifrost Edge pro koncová zařízení (v programu včasného přístupu). Nasadíte ho u sebe, ve VPC i bez připojení k internetu.
 
-[think private](https://thinkprivate.ai/bifrost) je partnerem pro Bifrost v Česku a na Slovensku. Pomůžeme s architekturou, nasazením a provozem.
+[think private](https://thinkprivate.ai/bifrost) je partnerem pro Bifrost v Česku a na Slovensku. Pomůžeme s architekturou, nasazením a provozem. Přehled rozdílů mezi edicemi: [OSS a Enterprise](oss-a-enterprise.md).
 
 👉 **[Nezávazná konzultace](https://thinkprivate.ai/bifrost)** · info@thinkprivate.ai
 
@@ -56,7 +78,7 @@ Bifrost Enterprise přidává jednotné přihlášení (SSO) a role, audit, guar
 
 ## Licence
 
-Překlady oficiální dokumentace jsou stejně jako originál pod licencí [Apache 2.0](LICENSE). Podrobnosti v [LICENSE-docs.md](LICENSE-docs.md).
+Překlady oficiální dokumentace i rychlé návody z ní odvozené jsou stejně jako originál pod licencí [Apache 2.0](LICENSE). Podrobnosti v [LICENSE-docs.md](LICENSE-docs.md).
 
 ---
 
