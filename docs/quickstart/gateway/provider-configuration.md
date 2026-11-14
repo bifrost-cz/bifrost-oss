@@ -1101,9 +1101,9 @@ Teď, když rozumíte konfiguraci poskytovatelů, pokračujte souvisejícími t�
 
 ### Základní témata
 
-- **[Streaming Responses](https://docs.getbifrost.ai/quickstart/gateway/streaming)**: generování odpovědí v reálném čase.
-- **[Tool Calling](https://docs.getbifrost.ai/quickstart/gateway/tool-calling)**: umožněte AI používat externí funkce.
-- **[Multimodal AI](https://docs.getbifrost.ai/quickstart/gateway/multimodal)**: zpracování obrázků, zvuku a textu.
+- **[Streaming Responses](./streaming.md)**: generování odpovědí v reálném čase.
+- **[Tool Calling](./tool-calling.md)**: umožněte AI používat externí funkce.
+- **[Multimodal AI](./multimodal.md)**: zpracování obrázků, zvuku a textu.
 - **[Integrace](./integrations.md)**: přímá kompatibilita se stávajícími SDK.
 
 ### Pokročilá témata

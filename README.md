@@ -23,7 +23,11 @@ Začínáme českým překladem oficiální dokumentace. Překládáme věrně a
 | Rychlý start | [Konfigurace poskytovatelů](docs/quickstart/gateway/provider-configuration.md) | ✅ |
 | Rychlý start | [Nastavení ověřování](docs/quickstart/gateway/setting-up-auth.md) | ✅ |
 | Rychlý start | [Integrace](docs/quickstart/gateway/integrations.md) | ✅ |
-| Rychlý start | streamování, volání nástrojů, multimodalita | 🚧 připravujeme |
+| Rychlý start | [Streamování odpovědí](docs/quickstart/gateway/streaming.md) | ✅ |
+| Rychlý start | [Volání nástrojů](docs/quickstart/gateway/tool-calling.md) | ✅ |
+| Rychlý start | [Multimodální AI](docs/quickstart/gateway/multimodal.md) | ✅ |
+| Rychlý start | [Reranking](docs/quickstart/gateway/reranking.md) | ✅ |
+| Rychlý start | [Decisions](docs/quickstart/gateway/decisions.md) | ✅ |
 | Funkce | virtuální klíče, rozpočty, směrování, sémantická cache | 🚧 připravujeme |
 | MCP | MCP gateway, Code Mode, Agent Mode | 🚧 připravujeme |
 | Nasazení | Docker, Kubernetes a Helm | 🚧 připravujeme |

@@ -66,9 +66,9 @@ Teď, když rozumíte integracím, pokračujte souvisejícími tématy:
 ### Základní témata
 
 - **[Konfigurace poskytovatelů](./provider-configuration.md)**: nastavte více poskytovatelů AI pro redundanci.
-- **[Tool Calling](https://docs.getbifrost.ai/quickstart/gateway/tool-calling)**: umožněte AI modelům používat externí funkce.
-- **[Streaming Responses](https://docs.getbifrost.ai/quickstart/gateway/streaming)**: generování odpovědí v reálném čase.
-- **[Multimodal AI](https://docs.getbifrost.ai/quickstart/gateway/multimodal)**: zpracování obrázků, zvuku a multimediálního obsahu.
+- **[Tool Calling](./tool-calling.md)**: umožněte AI modelům používat externí funkce.
+- **[Streaming Responses](./streaming.md)**: generování odpovědí v reálném čase.
+- **[Multimodal AI](./multimodal.md)**: zpracování obrázků, zvuku a multimediálního obsahu.
 
 ### Pokročilá témata
 
