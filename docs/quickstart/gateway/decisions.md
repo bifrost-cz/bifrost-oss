@@ -1,7 +1,7 @@
 <!--
 zdroj: maximhq/bifrost docs/quickstart/gateway/decisions.mdx
-upstream-commit: 0fb93426bea0e211963773c0a46876452869276c
-prelozeno: 2026-11-14
+upstream-commit: 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+prelozeno: 2026-11-19
 -->
 
 # Decisions
@@ -31,6 +31,8 @@ Pokud chcete poskytovatele zvolit výslovně, zapisujte modely jako `provider/mo
 | [OpenRouter](https://docs.getbifrost.ai/providers/supported-providers/openrouter#decisions) | `openrouter/~typesafe/jev-latest` | `/v1/decisions` | Záleží na modelu |
 | [Cloudflare](https://docs.getbifrost.ai/providers/supported-providers/cloudflare#4-decisions) | `cloudflare/clef`, `cloudflare/clef-flash`, `cloudflare/clef-omni` | `/v1/decisions` | Ano |
 | [Perplexity](https://docs.getbifrost.ai/providers/supported-providers/perplexity#3-decisions) | `perplexity/pplx-decider-v1.1-27b`, `perplexity/pplx-decider-v1-27b` | `/v1/decisions` | Ano |
+| [Baseten](https://docs.getbifrost.ai/providers/supported-providers/baseten#6-decisions) | `baseten/decision-models/baseten-joey-2b-latest`, `baseten/decision-models/baseten-elephant-9b-latest`, `baseten/decision-models/baseten-mammoth-27b-latest` | `/v1/decisions` | Ano, vložené přímo |
+| [Gemini](https://docs.getbifrost.ai/providers/supported-providers/gemini#12-decisions) | `gemini/gemini-decision-1` | `/v1/decisions` | Ano, navíc zvuk, video a [soubory](#soubory) PDF |
 | [Ollama](https://docs.getbifrost.ai/providers/supported-providers/ollama#6-decisions) | `ollama/nimble`, `ollama/clef-flash`, `ollama/tev1:0.8b` | `/v1/decisions` | Ano, jen base64 |
 | [Azure](https://docs.getbifrost.ai/providers/supported-providers/azure#10-decisions) | `azure/Microsoft-Decision-1` (alias klíče ho namapuje na vaše nasazení) | `/v1/decisions` | Ne |
 | [Databricks](https://docs.getbifrost.ai/providers/supported-providers/databricks#decisions) | `databricks/ai_decide`, `databricks/system.ai.openjev-qwen35-4b`, `databricks/system.ai.typesafeai-jev-1-14-0` | `/v1/decisions` | Modely System One, odkazem (viz [Obrázky odkazem](#obrázky-odkazem)) |
@@ -38,7 +40,7 @@ Pokud chcete poskytovatele zvolit výslovně, zapisujte modely jako `provider/mo
 | [SGLang](https://docs.getbifrost.ai/providers/supported-providers/sgl#decisions) | `sgl/clef-flash`, `sgl/kev-4b`, jakýkoli načtený model | `/v1/decisions` | Ano (Clef) |
 | [Laya, Nimble](https://docs.getbifrost.ai/providers/self-hosted-decision-models) | `laya/english`, `nimble/nimble-latest` | `/v1/decisions` | Ne |
 
-Každý poskytovatel odpovídá také na `/openai/v1/decisions` a `/typesafe/v1/systemone`, když pošlete název `provider/model`, takže se SDK OpenAI nebo TypeSafe dostane ke kterémukoli z nich. Nastavení popisuje stránka každého poskytovatele.
+Každý poskytovatel odpovídá také na `/openai/v1/decisions` a `/typesafe/v1/systemone`, když pošlete název `provider/model`, takže se SDK OpenAI nebo TypeSafe dostane ke kterémukoli z nich. [Části se soubory](#soubory) se přijímají jen na `/v1/decisions`, protože žádné z těchto API je nedefinuje. Nastavení popisuje stránka každého poskytovatele.
 
 Chatovací modely (například `openai/gpt-4o`) endpoint pro rozhodnutí nemají. Ve výchozím stavu vrátí `400` s kódem `unsupported_operation`. Se zapnutým nastavením kompatibility `convert_decision_to_responses` Bifrost odpověď emuluje přes Responses API modelu. Viz [Decision-to-Responses Emulation](https://docs.getbifrost.ai/features/compat-plugin#4-decision-to-responses-emulation).
 
@@ -102,7 +104,7 @@ curl --location 'http://localhost:8080/v1/decisions' \
 
 - `image_url` je data URL v base64 nebo URL `https`. Ollama čte jen base64.
 - `detail` je volitelné: `low`, `high`, `auto` nebo `original`.
-- Části jsou `input_text`, `input_image` a `input_json` (`{ "type": "input_json", "data": { ... } }`, objekt nebo pole) ve zprávách uživatele a `output_text` a `refusal` ve zprávách asistenta. Poskytovatel, který čte jen text (Azure, `ai_decide` od Databricks, Laya, Nimble), obrázek odmítne s `400`, takže požadavek může převzít [záložní model](#záložní-modely-fallbacks), který obrázky čte. TypeSafe a modely System One od Databricks čtou obrázky jen odkazem, jak je popsáno níže, a obrázek vložený přímo odmítnou stejně. vLLM a SGLang v0.5.22 nebo novější předávají obrázky modelu, který odpoví nebo vrátí vlastní `400`. SGLang v0.5.21 obrázky ignoruje, takže může odpovědět bez nich, místo aby vrátil `400`.
+- Části jsou `input_text`, `input_image`, `input_file` (viz [Soubory](#soubory)) a `input_json` (`{ "type": "input_json", "data": { ... } }`, objekt nebo pole) ve zprávách uživatele a `output_text` a `refusal` ve zprávách asistenta. Poskytovatel, který čte jen text (Azure, `ai_decide` od Databricks, Laya, Nimble), obrázek odmítne s `400`, takže požadavek může převzít [záložní model](#záložní-modely-fallbacks), který obrázky čte. TypeSafe a modely System One od Databricks čtou obrázky jen odkazem, jak je popsáno níže, a obrázek vložený přímo odmítnou stejně. vLLM a SGLang v0.5.22 nebo novější předávají obrázky modelu, který odpoví nebo vrátí vlastní `400`. SGLang v0.5.21 obrázky ignoruje, takže může odpovědět bez nich, místo aby vrátil `400`.
 - `text` v části `input_text` je řetězec nebo strukturovaná data (objekt nebo pole), která modely System One čtou beze změny a OpenAI dostane jako text JSON.
 
 ### Historie konverzace
@@ -119,6 +121,8 @@ Pokud chcete posoudit konverzaci, pošlete její zprávy spolu s voláními funk
 ```
 
 Výstup nástroje je řetězec nebo seznam částí `input_text` a `input_image`. Rozhodovací modely OpenAI čtou každou položku tak, jak byla poslána. Ostatní modely čtou konverzaci jako text JSON, takže obrázek ve výstupu nástroje poskytovatel, který čte jen text, odmítne stejně jako obrázek ve zprávě.
+
+Vstup Gemini nemá zprávy, proto je Bifrost vypíše postupně za sebou. Když pocházejí od více rolí nebo obsahují volání nástrojů, každá zpráva začíná svou rolí (`user: `, `assistant: `), aby model poznal, kdo co řekl. Volání a výstupy nástrojů se zapíšou jako JSON. Obrázky a soubory zůstávají médii na místě, kde byly v konverzaci. Když mluví jen jeden účastník, posílá se pouze obsah.
 
 ### Obrázky odkazem
 
@@ -154,9 +158,50 @@ curl http://localhost:8080/v1/decisions \
   -F 'camera-photo=@camera.jpg;type=image/jpeg'
 ```
 
-`name` v požadavku JSON, `name` bez odpovídající části se souborem i část se souborem, na kterou neodkazuje žádná část obrázku, se odmítnou s `400`.
+`name` v požadavku JSON, `name` bez odpovídající části se souborem i část se souborem, na kterou neodkazuje žádná část obrázku ani souboru, se odmítnou s `400`.
 
-**Strukturovaná data:** objekt, který se modelům System One (TypeSafe, Clef, Perplexity, Ollama, Azure, Databricks, vLLM, SGLang, Laya, Nimble) posílá beze změny a OpenAI jako text JSON.
+### Soubory
+
+PDF, zvukový záznam nebo video pošlete jako část `input_file`. Její `mime_type` je povinný a určuje, jak se soubor přečte. Bajty souboru pocházejí z jednoho ze tří míst:
+
+| Pole | Obsahuje |
+|-------|-------|
+| `data` | Soubor zakódovaný v base64 (prosté base64, ne data URL) |
+| `url` | URL HTTPS nebo URI z Gemini Files API, odkud si ho model stáhne |
+| `name` | Název části se souborem ve vícedílném požadavku, stejně jako u [obrázků odkazem](#obrázky-odkazem) výše. Použijte ho pro velké soubory, které pak putují jako nezpracované bajty místo base64 |
+
+```json
+"input": [
+  {
+    "role": "user",
+    "content": [
+      { "type": "input_text", "text": "Return request #8821." },
+      { "type": "input_file", "data": "JVBERi0xLjcK...", "mime_type": "application/pdf" },
+      { "type": "input_file", "url": "https://example.com/voicemail.mp3", "mime_type": "audio/mpeg" },
+      { "type": "input_file", "url": "https://example.com/unboxing.mp4", "mime_type": "video/mp4", "detail": "low" }
+    ]
+  }
+]
+```
+
+- `detail` nastavuje rozlišení videa (`low`, `high` nebo `auto`). Zvuk a PDF ho nemají.
+- Obrázky se vždy posílají jako `input_image`. `input_file` s typem `image/*` se odmítne s `400`.
+- Soubory čte jen [Gemini](https://docs.getbifrost.ai/providers/supported-providers/gemini#12-decisions). Každý jiný poskytovatel soubor odmítne s `400`, takže požadavek může obsloužit [záložní model](#záložní-modely-fallbacks).
+
+```bash
+curl http://localhost:8080/v1/decisions \
+  -F 'request={
+    "model": "gemini/gemini-decision-1",
+    "input": [{"role": "user", "content": [
+      {"type": "input_file", "name": "clip", "mime_type": "video/mp4"}
+    ]}],
+    "questions": [{"type": "predicate", "name": "damaged", "instructions": "Does the video show a damaged box?"}]
+  };type=application/json' \
+  -F 'clip=@unboxing.mp4;type=video/mp4'
+```
+
+
+**Strukturovaná data:** objekt, který se modelům System One (TypeSafe, Clef, Perplexity, Baseten, Ollama, Azure, Databricks, vLLM, SGLang, Laya, Nimble) posílá beze změny a OpenAI a Gemini jako text JSON.
 
 ```json
 "input": { "ticket_id": 4812, "message": "I was double charged.", "plan": "pro" }
@@ -249,7 +294,7 @@ Tyto požadavky Bifrost odmítne s `400` ještě před voláním jakéhokoli pos
 - otázka `choice` bez `choices`,
 - dvě otázky se stejným `name`.
 
-Počet úrovní score kontroluje každý poskytovatel (TypeSafe, Azure a Databricks přijímají 2 až 10, Perplexity 1 až 10).
+Počet úrovní score kontroluje každý poskytovatel (TypeSafe, Azure a Databricks přijímají 2 až 10, Perplexity a Baseten 1 až 10, Gemini 2 až 255).
 
 Část vstupu, kterou jeden model neumí přečíst, způsobí selhání jen tohoto pokusu, takže ji záložní model může ještě obsloužit. Pokud selžou všechny pokusy, dostanete chybu prvního pokusu.
 
@@ -297,4 +342,4 @@ Bifrost tělo považuje za mapový tvar, když je `questions` objekt s klíči p
 
 ---
 
-<sub>Přeloženo z oficiální dokumentace Bifrostu (Apache 2.0), soubor `docs/quickstart/gateway/decisions.mdx`, commit `0fb9342`. Změny: překlad do češtiny, převod z MDX do Markdownu. Originál: https://docs.getbifrost.ai/quickstart/gateway/decisions</sub>
+<sub>Přeloženo z oficiální dokumentace Bifrostu (Apache 2.0), soubor `docs/quickstart/gateway/decisions.mdx`, commit `3efed2f`. Změny: překlad do češtiny, převod z MDX do Markdownu. Originál: https://docs.getbifrost.ai/quickstart/gateway/decisions</sub>

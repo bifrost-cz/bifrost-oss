@@ -1,8 +1,8 @@
 <!--
 druh: rychlý návod (výběr a zkrácení, ne úplný překlad)
 zdroje: maximhq/bifrost docs/plugins/building-dynamic-binary.mdx, docs/deployment-guides/helm/plugins.mdx, docs/deployment-guides/helm/values.mdx, docs/deployment-guides/helm.mdx
-upstream-commit: 0fb93426bea0e211963773c0a46876452869276c
-sestaveno: 2026-11-14
+upstream-commit: 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+sestaveno: 2026-11-19
 -->
 
 # Dynamická image pro vlastní pluginy
@@ -37,8 +37,8 @@ Go načítá pluginy (`.so`) jen do **dynamicky linkované** binárky. Bifrost s
 
 | Cílové prostředí | Sestavujte s | Základní image pro build |
 |---|---|---|
-| Alpine kontejnery, Kubernetes s Alpine | musl | `golang:1.27.3-alpine3.24` |
-| Debian a Ubuntu kontejnery i servery, Kubernetes s Debianem | glibc | `golang:1.27.3-bookworm` |
+| Alpine kontejnery, Kubernetes s Alpine | musl | `golang:1.27.4-alpine3.24` |
+| Debian a Ubuntu kontejnery i servery, Kubernetes s Debianem | glibc | `golang:1.27.4-bookworm` |
 | RHEL a CentOS servery | glibc | nativní build nebo glibc kontejner |
 
 > [!WARNING]
@@ -89,7 +89,7 @@ Nejjednodušší je sestavit plugin v kontejneru se stejným základním image j
 docker run --rm \
   -v "$PWD:/work" \
   -w /work \
-  golang:1.27.3-alpine3.24 \
+  golang:1.27.4-alpine3.24 \
   sh -c "apk add --no-cache gcc musl-dev && \
          go build -buildmode=plugin -o myplugin.so main.go"
 
@@ -97,7 +97,7 @@ docker run --rm \
 docker run --rm \
   -v "$PWD:/work" \
   -w /work \
-  golang:1.27.3-bookworm \
+  golang:1.27.4-bookworm \
   sh -c "apt-get update && apt-get install -y gcc && \
          go build -buildmode=plugin -o myplugin.so main.go"
 ```
@@ -106,14 +106,14 @@ Ještě spolehlivější je sestavit plugin i Bifrost v jednom vícestupňovém 
 
 ```dockerfile
 # Build plugin
-FROM golang:1.27.3-alpine3.24 AS plugin-builder
+FROM golang:1.27.4-alpine3.24 AS plugin-builder
 WORKDIR /plugin
 COPY plugins/myplugin/ .
 RUN apk add --no-cache gcc musl-dev && \
     go build -buildmode=plugin -o myplugin.so main.go
 
 # Build Bifrost
-FROM golang:1.27.3-alpine3.24 AS bifrost-builder
+FROM golang:1.27.4-alpine3.24 AS bifrost-builder
 # ... (bifrost build steps)
 
 # Runtime
@@ -195,4 +195,4 @@ Zákazníci Enterprise dostávají vlastní image v privátním registru výrobc
 
 ---
 
-<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/plugins/building-dynamic-binary.mdx`, `docs/deployment-guides/helm/plugins.mdx`, `docs/deployment-guides/helm/values.mdx` a `docs/deployment-guides/helm.mdx`, commit `0fb9342`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu, doplňky think private (označené). Kód výrobce je převzatý beze změny. Originály: https://docs.getbifrost.ai/plugins/building-dynamic-binary a https://docs.getbifrost.ai/deployment-guides/helm/plugins</sub>
+<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/plugins/building-dynamic-binary.mdx`, `docs/deployment-guides/helm/plugins.mdx`, `docs/deployment-guides/helm/values.mdx` a `docs/deployment-guides/helm.mdx`, commit `3efed2f`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu, doplňky think private (označené). Kód výrobce je převzatý beze změny. Originály: https://docs.getbifrost.ai/plugins/building-dynamic-binary a https://docs.getbifrost.ai/deployment-guides/helm/plugins</sub>

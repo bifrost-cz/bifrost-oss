@@ -2,8 +2,8 @@
 druh: přehled (sestaveno z ceníku a dokumentace výrobce, ne překlad stránky)
 zdroje: maximhq/bifrost docs/overview.mdx, docs/enterprise/overview.mdx, docs/deployment-guides/overview.mdx, docs/features/governance/budget-and-limits.mdx, docs/mcp/virtual-mcps.mdx, docs/mcp/auth/overview.mdx, docs/features/observability/prometheus.mdx
 web: https://www.getmaxim.ai/bifrost/pricing (stav 2026-11-14, nehlídá se automaticky)
-upstream-commit: 0fb93426bea0e211963773c0a46876452869276c
-sestaveno: 2026-11-14
+upstream-commit: 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+sestaveno: 2026-11-19
 -->
 
 # Bifrost OSS a Enterprise: co je v které edici
@@ -120,4 +120,4 @@ Tabulka výše se v obou případech řídí dokumentací.
 
 ---
 
-<sub>Přehled sestavil think private z ceníku výrobce (https://www.getmaxim.ai/bifrost/pricing, stav 14. 11. 2026) a z oficiální dokumentace Bifrostu (Apache 2.0, commit `0fb9342`), mimo jiné `docs/overview.mdx` a `docs/enterprise/overview.mdx`. Nejde o oficiální dokument Maxim AI.</sub>
+<sub>Přehled sestavil think private z ceníku výrobce (https://www.getmaxim.ai/bifrost/pricing, stav 14. 11. 2026) a z oficiální dokumentace Bifrostu (Apache 2.0, commit `3efed2f`), mimo jiné `docs/overview.mdx` a `docs/enterprise/overview.mdx`. Nejde o oficiální dokument Maxim AI.</sub>

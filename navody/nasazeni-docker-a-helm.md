@@ -1,8 +1,8 @@
 <!--
 druh: rychlý návod (výběr a zkrácení, ne úplný překlad)
 zdroje: maximhq/bifrost docs/deployment-guides/overview.mdx, docs/deployment-guides/runtime-contract.mdx, docs/deployment-guides/helm.mdx, docs/quickstart/gateway/setting-up.mdx
-upstream-commit: 0fb93426bea0e211963773c0a46876452869276c
-sestaveno: 2026-11-14
+upstream-commit: 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+sestaveno: 2026-11-19
 -->
 
 # Nasazení: Docker a Helm
@@ -177,4 +177,4 @@ helm upgrade bifrost bifrost/bifrost \
 
 ---
 
-<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/deployment-guides/overview.mdx`, `docs/deployment-guides/runtime-contract.mdx`, `docs/deployment-guides/helm.mdx` a `docs/quickstart/gateway/setting-up.mdx`, commit `0fb9342`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu. Kód je převzatý beze změny. Originály: https://docs.getbifrost.ai/deployment-guides/overview, https://docs.getbifrost.ai/deployment-guides/runtime-contract a https://docs.getbifrost.ai/deployment-guides/helm</sub>
+<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/deployment-guides/overview.mdx`, `docs/deployment-guides/runtime-contract.mdx`, `docs/deployment-guides/helm.mdx` a `docs/quickstart/gateway/setting-up.mdx`, commit `3efed2f`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu. Kód je převzatý beze změny. Originály: https://docs.getbifrost.ai/deployment-guides/overview, https://docs.getbifrost.ai/deployment-guides/runtime-contract a https://docs.getbifrost.ai/deployment-guides/helm</sub>

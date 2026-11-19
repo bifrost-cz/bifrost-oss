@@ -1,7 +1,7 @@
 <!--
 zdroj: maximhq/bifrost docs/quickstart/gateway/streaming.mdx
-upstream-commit: 0fb93426bea0e211963773c0a46876452869276c
-prelozeno: 2026-11-14
+upstream-commit: 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+prelozeno: 2026-11-19
 -->
 
 # Streamování odpovědí
@@ -127,6 +127,58 @@ data: [DONE]
 
 **Uložení streamu:** přidejte `> audio_stream.txt` a výstup se přesměruje do souboru.
 
+## Inkrementální převod textu na řeč: streamování textu dovnitř a zvuku ven
+
+Když text teprve vzniká, například ho píše LLM, otevřete WebSocket na `GET /v1/audio/speech/stream` a posílejte text tak, jak přichází. Zvuk se vrací, ještě než je věta dogenerovaná. Poskytovatelé: ElevenLabs (`eleven_v4_turbo`) a Soniox (`tts-rt-v2`).
+
+Ověřování, virtuální klíče, rozpočty a limity požadavků fungují jako u ostatních inferenčních endpointů. Kontrolují se jednou, při otevření relace. Relace je jeden zalogovaný požadavek, účtovaný podle počtu odeslaných znaků.
+
+První událost musí být `speech.config`. Přijímá pole z `POST /v1/audio/speech` kromě `input` a `model` má tvar `provider/model`. Ostatní pole se předají poskytovateli stejně jako tam.
+
+| Událost klienta | Význam |
+|---|---|
+| `speech.config` | Otevře relaci. `{"type":"speech.config","model":"elevenlabs/eleven_v4_turbo","voice":"<voice id>","response_format":"pcm"}` |
+| `speech.text` | Text k vyslovení, `{"type":"speech.text","text":"Hello there, "}`. Posílejte ho po částech. |
+| `speech.flush` | Vysloví, co poskytovatel drží, a uzavře aktuální segment. |
+| `speech.end` | Provede flush a pak skončí. Relace se zavře po `speech.audio.done`. |
+| `speech.cancel` | Zahodí čekající text a zvuk. Relace zůstane otevřená. |
+
+| Událost serveru | Význam |
+|---|---|
+| `speech.session.created` | Relace je otevřená. Obsahuje `session.id`, `model`, `response_format` a u nezpracovaných formátů `sample_rate`. |
+| `speech.audio.delta` | `audio` v Base64, `segment`, ke kterému patří, a `alignment`, když je `with_timestamps` true. |
+| `speech.segment.done` | Zvuk segmentu `segment` je kompletní. |
+| `speech.cancelled` | Zrušení se projevilo. Z `segment` ani z dřívějšího segmentu už nic nepřijde. |
+| `speech.audio.done` | Relace skončila. `usage.input_chars` je počet odeslaných znaků. |
+| `error` | Relaci se nepodařilo otevřít, nebo ji ukončil poskytovatel. |
+
+Segmenty se číslují od 1. Každý flush segment ukončí a zrušení ukončí všechny ještě čekající segmenty. Text poslaný po zrušení začne nový segment.
+
+Poskytovatelé drží krátký text, dokud nemají dost na vyslovení. Po větě, kterou chcete slyšet hned, proto pošlete `speech.flush`. Flush provede i `speech.end`. Brána zavře relaci, která 5 minut nic nepošle, a zpráva může mít nejvýše 1 MiB. Záložní přepnutí na jiného poskytovatele neexistuje.
+
+```python
+import asyncio, base64, json, websockets
+
+async def speak():
+    headers = {"Authorization": "Bearer sk-bf-..."}
+    async with websockets.connect("ws://localhost:8080/v1/audio/speech/stream", additional_headers=headers) as ws:
+        await ws.send(json.dumps({"type": "speech.config", "model": "elevenlabs/eleven_v4_turbo", "voice": "21m00Tcm4TlvDq8ikWAM", "response_format": "pcm"}))
+        await ws.send(json.dumps({"type": "speech.text", "text": "Hello there, this is incremental speech."}))
+        await ws.send(json.dumps({"type": "speech.end"}))
+        async for message in ws:
+            event = json.loads(message)
+            if event["type"] == "speech.audio.delta":
+                audio = base64.b64decode(event["audio"])  # play or save it
+            elif event["type"] == "speech.audio.done":
+                print("characters billed:", event["usage"]["input_chars"])
+
+asyncio.run(speak())
+```
+
+**ElevenLabs:** relace používá socket text-to-dialogue, který přijímá jeden hlas. Nemá zrušení, takže zrušení zavře spojení s poskytovatelem a další text otevře nové.
+
+**Soniox:** `language_code` je povinný. Soniox nemá flush, takže každý segment je samostatný stream Soniox: flush stream ukončí a další text otevře nový. Stream, který 3 sekundy nedostane žádný text, se ukončí stejně, takže pauza je hranicí segmentu. Nezpracovaný `pcm` má 24 kHz, pokud není nastavené `sample_rate`.
+
 ## Streamování převodu řeči na text: přepis zvuku v reálném čase
 
 Výsledky přepisu zvuku streamujte, jak se zpracovávají. Text dostanete okamžitě, což se hodí pro aplikace v reálném čase i pro dlouhé zvukové soubory.
@@ -183,4 +235,4 @@ Když už rozumíte streamování odpovědí, podívejte se na související té
 
 ---
 
-<sub>Přeloženo z oficiální dokumentace Bifrostu (Apache 2.0), soubor `docs/quickstart/gateway/streaming.mdx`, commit `0fb9342`. Změny: překlad do češtiny, převod z MDX do Markdownu. Originál: https://docs.getbifrost.ai/quickstart/gateway/streaming</sub>
+<sub>Přeloženo z oficiální dokumentace Bifrostu (Apache 2.0), soubor `docs/quickstart/gateway/streaming.mdx`, commit `3efed2f`. Změny: překlad do češtiny, převod z MDX do Markdownu. Originál: https://docs.getbifrost.ai/quickstart/gateway/streaming</sub>

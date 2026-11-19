@@ -1,8 +1,8 @@
 <!--
 druh: rychlý návod (výběr a zkrácení, ne úplný překlad)
 zdroje: maximhq/bifrost docs/cli-agents/overview.mdx, docs/cli-agents/claude-code.mdx, docs/cli-agents/codex-cli.mdx
-upstream-commit: 0fb93426bea0e211963773c0a46876452869276c
-sestaveno: 2026-11-14
+upstream-commit: 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+sestaveno: 2026-11-19
 -->
 
 # CLI agenti: Claude Code a Codex CLI
@@ -121,7 +121,7 @@ supports_websockets = false
 
 - Koncové `/v1` v `base_url` je povinné, Codex k adrese přidává `/responses`.
 - `supports_websockets = false` drží Codex na HTTP, což je potřeba, když Bifrost požadavek překládá pro poskytovatele bez WebSocket protokolu OpenAI.
-- Pokud máte v Codexu aktivní přihlášení k OpenAI, nejdřív se odhlaste (`/logout`), jinak má přednost.
+- Stávající přihlášení k ChatGPT nebo OpenAI nemusíte rušit přes `/logout`. S `requires_openai_auth = false` Codex ověřuje poskytovatele `bifrost` jeho vlastním klíčem (`env_key`) a přihlášení v `auth.json` ponechá pro ostatní poskytovatele.
 
 ## Další agenti a editory
 
@@ -134,4 +134,4 @@ Stejným způsobem lze přes Bifrost pustit také Gemini CLI, Qwen Code, OpenCod
 
 ---
 
-<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/cli-agents/overview.mdx`, `docs/cli-agents/claude-code.mdx` a `docs/cli-agents/codex-cli.mdx`, commit `0fb9342`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu. Kód je převzatý beze změny. Originály: https://docs.getbifrost.ai/cli-agents/overview, https://docs.getbifrost.ai/cli-agents/claude-code a https://docs.getbifrost.ai/cli-agents/codex-cli</sub>
+<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/cli-agents/overview.mdx`, `docs/cli-agents/claude-code.mdx` a `docs/cli-agents/codex-cli.mdx`, commit `3efed2f`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu. Kód je převzatý beze změny. Originály: https://docs.getbifrost.ai/cli-agents/overview, https://docs.getbifrost.ai/cli-agents/claude-code a https://docs.getbifrost.ai/cli-agents/codex-cli</sub>
