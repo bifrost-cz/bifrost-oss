@@ -22,12 +22,10 @@ Go načítá pluginy (`.so`) jen do **dynamicky linkované** binárky. Bifrost s
 | Přenositelnost | jakákoli distribuce | jen systém se stejnou libc |
 | Kdo ho sestavuje | výrobce | vy |
 
-**Doplněk think private:** v release pipeline výrobce jsme k commitu `0fb9342` dynamickou variantu image nenašli. Počítejte s tím, že si ji sestavíte sami a budete ji znovu sestavovat při každém vydání Bifrostu, stejně jako plugin.
-
 ## Postup v kostce
 
 1. Zvolte libc podle cílového prostředí (Alpine, nebo Debian).
-2. Naklonujte zdrojový kód Bifrostu ve verzi, kterou chcete provozovat (tag `transports/vX.Y.Z`, viz [Vlastní plugin v Go](./vlastni-plugin-go.md#než-začnete)).
+2. Naklonujte zdrojový kód Bifrostu ve verzi, kterou chcete provozovat.
 3. Sestavte dynamický Bifrost.
 4. Plugin sestavte ve **stejném** prostředí (stejné Go, libc, architektura).
 5. Ověřte linkování a načtení pluginu.
@@ -142,16 +140,7 @@ Pokud `ldd` vypíše `statically linked`, binárka pluginy nenačte. Shodu verz�
 
 ## 5. Kubernetes přes Helm
 
-Chart ve výchozím stavu používá oficiální image `docker.io/maximhq/bifrost` (`image.repository`). **Doplněk think private:** dokumentace Helmu u vlastních pluginů neříká, že je potřeba image vyměnit. Bez toho se plugin nenačte. Ve values nastavte svou dynamickou image:
-
-<!-- kód: think private -->
-```yaml
-image:
-  repository: registry.example.com/bifrost-dynamic
-  tag: "v2.5.1"
-imagePullSecrets:
-  - name: registry-credentials
-```
+Chart ve výchozím stavu používá oficiální image `docker.io/maximhq/bifrost` (`image.repository`).
 
 Plugin zapnete v `bifrost.plugins.custom`:
 
@@ -180,12 +169,7 @@ volumeMounts:
     mountPath: /plugins
 ```
 
-> [!TIP]
-> **Doplněk think private:** ConfigMap má v Kubernetes limit 1 MiB a Go plugin bývá větší. Spolehlivější je mít plugin přímo ve vlastní image (vícestupňový Dockerfile výše), případně ho stáhnout init kontejnerem, jak popisuje [dokumentace výrobce](https://docs.getbifrost.ai/deployment-guides/helm/plugins). Verze pluginu a image pak zůstávají svázané.
-
-## Bifrost Enterprise
-
-Zákazníci Enterprise dostávají vlastní image v privátním registru výrobce. Než budete vlastní plugin nasazovat na Enterprise, ověřte s podporou výrobce, jak má být image pro pluginy sestavená. Rádi to zjistíme za vás.
+Plugin lze také stáhnout init kontejnerem, postup je v [dokumentaci výrobce](https://docs.getbifrost.ai/deployment-guides/helm/plugins).
 
 ## Další kroky
 
@@ -195,4 +179,4 @@ Zákazníci Enterprise dostávají vlastní image v privátním registru výrobc
 
 ---
 
-<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/plugins/building-dynamic-binary.mdx`, `docs/deployment-guides/helm/plugins.mdx`, `docs/deployment-guides/helm/values.mdx` a `docs/deployment-guides/helm.mdx`, commit `3efed2f`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu, doplňky think private (označené). Kód výrobce je převzatý beze změny. Originály: https://docs.getbifrost.ai/plugins/building-dynamic-binary a https://docs.getbifrost.ai/deployment-guides/helm/plugins</sub>
+<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/plugins/building-dynamic-binary.mdx`, `docs/deployment-guides/helm/plugins.mdx`, `docs/deployment-guides/helm/values.mdx` a `docs/deployment-guides/helm.mdx`, commit `3efed2f`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu. Kód výrobce je převzatý beze změny. Originály: https://docs.getbifrost.ai/plugins/building-dynamic-binary a https://docs.getbifrost.ai/deployment-guides/helm/plugins</sub>
