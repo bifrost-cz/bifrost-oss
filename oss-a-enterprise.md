@@ -105,15 +105,6 @@ Legenda: ✅ obsaženo, ❌ není, ➕ rozšířeno oproti OSS.
 | Vlastní pluginy | ✅ | ✅ | [Pluginy v kostce](navody/pluginy.md) |
 | Podpora | komunita | ✅ se SLA, onboarding | [Ceník](https://www.getmaxim.ai/bifrost/pricing) |
 
-OSS si samozřejmě můžete provozovat kdekoli sami, i on-premise a bez internetu. Řádek o nasazení ve VPC se týká Enterprise nasazení s podporou výrobce.
-
-## Kde se zdroje liší
-
-- **Virtual MCPs:** přehled Enterprise v dokumentaci je řadí mezi funkce Enterprise, stránka [Virtual MCPs](https://docs.getbifrost.ai/mcp/virtual-mcps) je ale popisuje jako součást OSS (dřív se jmenovaly MCP Tool Groups). Enterprise je navíc umí přidělit přes přístupové profily.
-- **OpenTelemetry:** ceník uvádí „External OTel Connectors“ jen u Enterprise. Podle dokumentace je export přes OpenTelemetry do vlastního kolektoru součástí OSS, jen u Enterprise jsou nativní konektory jako Datadog.
-
-Tabulka výše se v obou případech řídí dokumentací.
-
 ## Potřebujete Enterprise, nebo poradit?
 
 [think private](https://thinkprivate.ai/bifrost) je partnerem pro Bifrost v Česku a na Slovensku. Pomůžeme rozhodnout, jestli vám stačí OSS, a s nasazením obou edic. 👉 **[Nezávazná konzultace](https://thinkprivate.ai/bifrost)** · info@thinkprivate.ai

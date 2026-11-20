@@ -23,22 +23,9 @@ Go plugin je sdílená knihovna (`.so`), kterou Bifrost načte za běhu. Go je u
 | Ostatní závislosti, které plugin sdílí s Bifrostem | přesně | `go version -m` u pluginu i binárky |
 | Operační systém | Linux nebo macOS (Windows ne) | |
 | Architektura | `amd64` nebo `arm64`, stejná | `uname -m` |
-| libc | musl (Alpine), nebo glibc (Debian, Ubuntu, RHEL), stejná | `ldd` |
+| libc | musl (Alpine), nebo glibc (Debian, Ubuntu, RHEL), stejná | |
 
 A Bifrost musí být **dynamicky linkovaný**. Oficiální image to není, viz [Dynamická image](./dynamicka-image.md).
-
-> [!TIP]
-> **Doplněk think private:** verzi Go a `core`, proti které máte plugin sestavit, zjistíte nejspolehlivěji z tagu vydání, které provozujete. Vydání brány mají tagy `transports/vX.Y.Z`:
-
-<!-- kód: think private -->
-```bash
-# Verze Bifrostu, kterou provozujete (příklad)
-BIFROST_VERSION=2.5.1
-git clone --depth 1 --branch transports/v$BIFROST_VERSION https://github.com/maximhq/bifrost bifrost-src
-grep -E '^go |maximhq/bifrost/core ' bifrost-src/transports/go.mod
-```
-
-Pro `transports/v2.5.1` vypíše `go 1.27.3` a `github.com/maximhq/bifrost/core v1.15.2`. Stejný klon použijete i pro sestavení dynamického Bifrostu.
 
 ## 1. Projekt
 
@@ -57,15 +44,13 @@ cd my-plugin
 go mod init github.com/yourusername/my-plugin
 ```
 
-Závislost na Bifrostu přidejte **v přesné verzi** z předchozího kroku, ne `@latest` z ukázky výrobce (doplněk think private):
+Přidejte Bifrost jako závislost:
 
-<!-- kód: think private -->
 ```bash
-go get github.com/maximhq/bifrost/core@v1.15.2
-go mod tidy
+go get github.com/maximhq/bifrost/core@latest
 ```
 
-`go.mod` pak vypadá takto (s vaší verzí místo ukázkové):
+`go.mod` pak vypadá takto:
 
 ```go
 module github.com/yourusername/my-plugin
@@ -353,4 +338,4 @@ go build -buildmode=plugin -o my-plugin.so main.go
 
 ---
 
-<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/plugins/writing-go-plugin.mdx` a `docs/plugins/building-dynamic-binary.mdx`, commit `3efed2f`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu, doplněk think private ke zjištění verzí (označený). Kód výrobce je převzatý beze změny. Originály: https://docs.getbifrost.ai/plugins/writing-go-plugin a https://docs.getbifrost.ai/plugins/building-dynamic-binary</sub>
+<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/plugins/writing-go-plugin.mdx` a `docs/plugins/building-dynamic-binary.mdx`, commit `3efed2f`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu. Kód výrobce je převzatý beze změny. Originály: https://docs.getbifrost.ai/plugins/writing-go-plugin a https://docs.getbifrost.ai/plugins/building-dynamic-binary</sub>
