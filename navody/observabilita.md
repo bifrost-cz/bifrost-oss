@@ -1,8 +1,8 @@
 <!--
 druh: rychlý návod (výběr a zkrácení, ne úplný překlad)
 zdroje: maximhq/bifrost docs/features/observability/default.mdx, docs/features/telemetry.mdx, docs/features/observability/prometheus.mdx, docs/features/observability/otel.mdx
-upstream-commit: 0fb93426bea0e211963773c0a46876452869276c
-sestaveno: 2026-11-14
+upstream-commit: 3efed2f7995f4f8c12005cda0d773cc6f8a3b60b
+sestaveno: 2026-11-19
 -->
 
 # Observabilita
@@ -166,4 +166,4 @@ Hotové nastavení pro Grafana Cloud, Datadog, New Relic, Honeycomb, Langfuse a 
 
 ---
 
-<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/features/observability/default.mdx`, `docs/features/telemetry.mdx`, `docs/features/observability/prometheus.mdx` a `docs/features/observability/otel.mdx`, commit `0fb9342`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu. Kód je převzatý beze změny. Originály: https://docs.getbifrost.ai/features/observability/default, https://docs.getbifrost.ai/features/telemetry, https://docs.getbifrost.ai/features/observability/prometheus a https://docs.getbifrost.ai/features/observability/otel</sub>
+<sub>Zkrácený návod, který sestavil think private z oficiální dokumentace Bifrostu (Apache 2.0), soubory `docs/features/observability/default.mdx`, `docs/features/telemetry.mdx`, `docs/features/observability/prometheus.mdx` a `docs/features/observability/otel.mdx`, commit `3efed2f`. Změny: výběr a zkrácení obsahu, překlad do češtiny, převod z MDX do Markdownu. Kód je převzatý beze změny. Originály: https://docs.getbifrost.ai/features/observability/default, https://docs.getbifrost.ai/features/telemetry, https://docs.getbifrost.ai/features/observability/prometheus a https://docs.getbifrost.ai/features/observability/otel</sub>
